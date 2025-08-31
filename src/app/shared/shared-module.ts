@@ -13,6 +13,8 @@ import { SidebarComponent } from './componets/sidebar/sidebar.component';
 import { UserformComponent } from './componets/userform/userform.component';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { StorageProvider } from './provide/storage-provider';
+import { EncryptService } from './provide/encrypt'; 
 
 
 
@@ -31,6 +33,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     UserformComponent,
   ],
   providers:[
+    StorageProvider,
     
   ],
   imports: [

@@ -9,9 +9,10 @@ import { FormControl } from '@angular/forms';
 })
 export class InputComponent  implements OnInit {
  @Input() label: string = '';
- @Input() type:'email' | 'password' | 'text' = 'text';
+ @Input() type:'email' | 'password' | 'name'| 'lastname'| 'country'| 'text' = 'text';
  @Input() clear:boolean = false;
  @Input() control:FormControl = new FormControl();
+ 
 
   
   constructor() { }

@@ -1,13 +1,14 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>register</ion-title>
-  </ion-toolbar>
-</ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">register</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<app-header>
+
+</app-header>
+<form submit="onsubmit()">
+ <app-input label="NAME" type="name" [clear]="true" [control]="namecontrol"></app-input>
+  <app-input label="LASTNAME" type="lastname" [clear]="true" [control]="lastnamecontrol"></app-input>
+  <app-input label="EMAIL" type="email" [clear]="true" [control]="emailcontrol"></app-input>
+  <app-input label="PASSWORD" type="password"[clear]="false" [control]="passwordcontrol"></app-input>
+  <app-input label="COUNTRY" type="country" [clear]="true" [control]="countrycontrol"></app-input>
+  <app-button waittext="REGISTER" type="submit" (click)="onsubmit()"></app-button>
+  </form>
 </ion-content>
