@@ -1,57 +1,66 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
-import { v4 as uuidv4 } from 'uuid';
+import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { StorageProvider } from 'src/app/shared/provide/storage-provider';
+import { Iuser, UserService } from 'src/app/shared/service/user-service';
+import { v4 as uuid } from 'uuid';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.page.html',
   styleUrls: ['./register.page.scss'],
-  standalone:false
+  standalone: false
 })
 export class RegisterPage implements OnInit {
-emailcontrol = new FormControl('', [Validators.required, Validators.email]);
-passwordcontrol = new FormControl('', [Validators.required, Validators.minLength(6)]);
-namecontrol = new FormControl('', [Validators.required]);
-lastnamecontrol = new FormControl('', [Validators.required]);
-countrycontrol = new FormControl('', [Validators.required]);
-  storageProvide: any;
 
+  nameControl: FormControl = new FormControl('', [Validators.required])
+  lastNameControl: FormControl = new FormControl('', [Validators.required])
+  emailControl: FormControl = new FormControl('', [Validators.required, Validators.email])
+  passwordControl: FormControl = new FormControl('', [Validators.required])
+  countryControl: FormControl = new FormControl('', [Validators.required])
 
-constructor(private storageProvider:StorageProvider){ }
-
+  constructor(private userService: UserService, private router: Router) { }
 
   ngOnInit() {
   }
-  onsubmit() {
-     const user={
-      id: uuidv4(),
-      email:this.emailcontrol.value,
-      password:this.passwordcontrol.value,
-    
-      name:this.namecontrol.value,
-      lastname:this.lastnamecontrol.value,
-      country:this.countrycontrol.value
-     };
-      if(!this.passwordcontrol.valid){
-      console.log('the password must be at least 4 characters');
-      return;
-     }
-     if(!this.emailcontrol.valid){
-      console.log('Email is invalid');
-      return;
-     }
-     if(!this.namecontrol.valid){
-      console.log('Name is invalid');
-      return;
-     }
-      if(!this.lastnamecontrol.valid){
-      console.log('Last Name is invalid');
-      return;
-     }
-    
-     this.storageProvider.set('user', JSON.stringify(user));
-    }
-  
 
+  onsubmit() {
+
+// Verifica si los campos están vacíos
+  if (!this.passwordControl.valid 
+    || !this.emailControl.valid 
+    || !this.nameControl.valid 
+    || !this.lastNameControl.valid 
+    || !this.countryControl.valid) {
+    console.log('fill all the fields');
+    return;
+  }
+
+  // Verifica el formato del email
+  if (!this.emailControl.valid) {
+    console.log('Invalid email format');
+    return;
+  }
+
+const user:Iuser = {
+        id: uuidv4(),
+      name: this.nameControl.value,
+      lastName: this.lastNameControl.value,
+      country: this.countryControl.value,
+      email: this.emailControl.value,
+      password: this.passwordControl.value
+    }
+
+
+    this.userService.registeruser(user);
+
+  }
+
+  gotologin() {
+    this.router.navigate(['/login']);
+  }
 }
+function uuidv4(): string {
+  throw new Error('Function not implemented.');
+}
+

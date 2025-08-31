@@ -34,6 +34,9 @@ import { EncryptService } from './provide/encrypt';
   ],
   providers:[
     StorageProvider,
+    EncryptService,
+    
+    
     
   ],
   imports: [
