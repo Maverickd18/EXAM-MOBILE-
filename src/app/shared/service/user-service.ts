@@ -21,7 +21,7 @@ registeruser(user: Iuser) {
   if (!user) {
     return false;
   }
-  console.log(this.Encriptar.desencriptar(user.password));
+  
   if (user.email === email && this.Encriptar.desencriptar(user.password) === password) {
     this.storageProvider.set('user', JSON.stringify(user));
     return true;
