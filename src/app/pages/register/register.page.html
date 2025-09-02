@@ -8,7 +8,9 @@
   <app-input label="LASTNAME" type="lastname" [clear]="true" [control]="lastNameControl"></app-input>
   <app-input label="EMAIL" type="email" [clear]="true" [control]="emailControl"></app-input>
   <app-input label="PASSWORD" type="password"[clear]="false" [control]="passwordControl"></app-input>
-  <app-input label="COUNTRY" type="country" [clear]="true" [control]="countryControl"></app-input>
+  <app-input label="Confirm PASSWORD" type="password" [clear]="false" [control]="CONFIRMPasswordControl"></app-input>
+  <app-select label="Country" [list]="data" [controller]="countryControl"></app-select>
+  
   <app-button waittext="REGISTER" type="submit" (click)="onsubmit()"></app-button>
   <app-button waittext="BACK"type="button" (click)="gotologin()"></app-button>
   </form>

@@ -1,28 +1,67 @@
 import { Injectable } from '@angular/core';
 import { StorageProvider } from '../provide/storage-provider';
+import { Encriptador } from '../provide/encrypt';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  constructor(private storageProvider: StorageProvider) { }
+  constructor(private storageProvider: StorageProvider, private Encriptar:Encriptador) { }
 
-  registeruser(user: Iuser) {
-    this.storageProvider.set('user', JSON.stringify(user));
+registeruser(user: Iuser) {
+    const users:Iuser[] = this.storageProvider.get<Iuser[]>('users') || [];
+    user.password = this.Encriptar.encriptar(user.password);
+    users.push(user);
+    this.storageProvider.set('users', JSON.stringify(users));
 
   }
-
-
-LoginUser(email: string, password: string): boolean {
-   const user: Iuser | null = this.storageProvider.get<Iuser>('user');
+    LoginUser(email: string, password: string): boolean {
+   const users: Iuser[] = this.storageProvider.get<Iuser[]>('users') || [];
+    const user = users.find(u => u.email === email);
   if (!user) {
     return false;
   }
-  return user.email === email && user.password === password;
+  console.log(this.Encriptar.desencriptar(user.password));
+  if (user.email === email && this.Encriptar.desencriptar(user.password) === password) {
+    this.storageProvider.set('user', JSON.stringify(user));
+    return true;
+  } 
+  return false;
+}
+updateUser(updatedUser: Iuser) {
+  const users: Iuser[] = this.storageProvider.get<Iuser[]>('users') || [];
+  const index = users.findIndex(u => u.id === updatedUser.id);
+  if (index !== -1) {
+    updatedUser.password = this.Encriptar.encriptar(updatedUser.password);
+    users[index] = updatedUser;
+    this.storageProvider.set('users', JSON.stringify(users));
+ this.storageProvider.set('user', JSON.stringify(updatedUser));
+  }
+}
+getUser(): Iuser | null {
+  const userStr = this.storageProvider.get<string>('user');
+
+  // por si esta vacio o mal guardado
+  if (!userStr) return null;
+
+  try {
+    // por si viene serializado
+    if (typeof userStr === 'string') {
+      return JSON.parse(userStr);
+    }
+
+    //  por si vino como objeto 
+    return userStr as Iuser;
+  } catch (error) {
+    console.error('Error parsing user from storage:', error);
+    return null;
+  }
 }
 
 
-
+getDecryptedPassword(user: Iuser): string {
+  return this.Encriptar.desencriptar(user.password);
+}
 
 }
 

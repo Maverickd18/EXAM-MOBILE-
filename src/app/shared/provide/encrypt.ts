@@ -4,14 +4,17 @@ import * as CryptoJS from 'crypto-js';
 @Injectable({
   providedIn: 'root'
 })
-export class EncryptService {
+export class Encriptador {
+  private key: string = 'una-llave-secreta';
 
-  encryptPassword(password: string): string {
-    return CryptoJS.SHA256(password).toString(CryptoJS.enc.Hex);
+  constructor() {}
+
+  encriptar(texto: string): string {
+    return CryptoJS.AES.encrypt(texto, this.key).toString();
   }
 
-  comparePassword(password: string, hash: string): boolean {
-    const encrypted = this.encryptPassword(password);
-    return encrypted === hash;
+  desencriptar(textoEncriptado: string): string {
+    const bytes = CryptoJS.AES.decrypt(textoEncriptado, this.key);
+    return bytes.toString(CryptoJS.enc.Utf8);
   }
 }

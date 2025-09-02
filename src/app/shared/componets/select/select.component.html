@@ -1,3 +1,5 @@
-<p>
-  select works!
-</p>
+<ion-select [formControl]="controller" [placeholder]="placeholder" [label]="label">
+  <ion-select-option *ngFor="let item of list" [value]="item.name">
+    <span *ngIf="item.unicodeFlag">{{ item.unicodeFlag }} </span>{{ item.name }}
+  </ion-select-option>
+</ion-select>

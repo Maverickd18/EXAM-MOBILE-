@@ -14,7 +14,7 @@ import { UserformComponent } from './componets/userform/userform.component';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { StorageProvider } from './provide/storage-provider';
-import { EncryptService } from './provide/encrypt'; 
+import { Encriptador } from './provide/encrypt'; 
 
 
 
@@ -34,7 +34,7 @@ import { EncryptService } from './provide/encrypt';
   ],
   providers:[
     StorageProvider,
-    EncryptService,
+    Encriptador,
     
     
     
