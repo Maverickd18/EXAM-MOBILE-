@@ -1,4 +1,21 @@
 <ion-content [fullscreen]="true">
- <app-header>
- </app-header>
+  <app-header></app-header>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ng-container *ngIf="data?.articles?.length; else loadingTpl">
+    <ng-container *ngFor="let item of data.articles">
+      <app-card
+  [writter]="item.author"
+  [title]="item.title"
+  [description]="item.description"
+  [imageUrl]="item.urlToImage"
+  [url]="item.url">
+</app-card>
+    </ng-container>
+  </ng-container>
+  <ng-template #loadingTpl>
+    <ion-spinner *ngIf="loading"></ion-spinner>
+    <p *ngIf="!loading">No hay noticias disponibles.</p>
+  </ng-template>
 </ion-content>

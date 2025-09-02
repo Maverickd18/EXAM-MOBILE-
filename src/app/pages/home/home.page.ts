@@ -1,21 +1,40 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { Api } from 'src/app/shared/provide/api';
+import { NewsApiService } from 'src/app/shared/provide/newsapi';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
-  standalone:false
+  standalone: false
 })
 export class HomePage implements OnInit {
-  data: any | null = null;
+  data: any = null;
+  loading = false;
 
-  constructor(private router:Router,private api:Api) { }
+  constructor(private newsApi: NewsApiService) {}
 
   ngOnInit() {
+    this.loadNews();
   }
-  async thenews(){
-    this.data = await this.api.get('https://newsapi.org/v2/top-headlines?language=es');
+
+  loadNews(event?: any) {
+    this.loading = true;
+    this.newsApi.getNews().subscribe({
+      next: (res) => {
+        this.data = res;
+        this.loading = false;
+        if (event) event.target.complete();
+        console.log(this.data); // Para depuración
+      },
+      error: (err) => {
+        this.loading = false;
+        if (event) event.target.complete();
+        console.error('Error cargando noticias:', err);
+      }
+    });
+  }
+
+  doRefresh(event: any) {
+    this.loadNews(event);
   }
 }
