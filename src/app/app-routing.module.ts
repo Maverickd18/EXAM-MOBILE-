@@ -1,8 +1,9 @@
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { isloggedGuard } from './guards/islogged-guard';
 import { authGuard } from './guards/auth-guard';
+import { mineInterceptorInterceptor } from './mine-interceptor-interceptor';
 
 
 const routes: Routes = [
@@ -40,7 +41,7 @@ const routes: Routes = [
   imports: [
     RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
   ],
-  providers: [provideHttpClient()],
+  providers: [provideHttpClient(withInterceptors([mineInterceptorInterceptor]))],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

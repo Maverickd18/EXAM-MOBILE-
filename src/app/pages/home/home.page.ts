@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Api } from 'src/app/shared/provide/api';
 
 @Component({
   selector: 'app-home',
@@ -7,10 +9,13 @@ import { Component, OnInit } from '@angular/core';
   standalone:false
 })
 export class HomePage implements OnInit {
+  data: any | null = null;
 
-  constructor() { }
+  constructor(private router:Router,private api:Api) { }
 
   ngOnInit() {
   }
-
+  async thenews(){
+    this.data = await this.api.get('https://newsapi.org/v2/top-headlines?language=es');
+  }
 }
