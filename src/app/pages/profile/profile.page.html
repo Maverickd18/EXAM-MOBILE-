@@ -1,13 +1,20 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>profile</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">profile</ion-title>
-    </ion-toolbar>
-  </ion-header>
+
+  <form (submit)="onSubmit()">
+
+    <app-input label="Name" type="text" placeholder="Enter your name" [control]="nameController"></app-input>
+    <app-input label="Last Name" type="text" placeholder="Enter your last name"
+      [control]="lastNameController"></app-input>
+    <app-input label="Email" type="email" placeholder="Enter your email" [control]="emailController"></app-input>
+    <app-input label="Password" type="password" placeholder="Enter your old password"
+      [control]="passwordController"></app-input>
+    <app-input label="New Password" type="password" placeholder="Enter your new password"
+      [control]="newPasswordController"></app-input>
+    <app-select label="Country" [list]="data" [controller]="countryController"></app-select>
+
+    <app-button  waittext="Update"type="submit"></app-button>
+    <app-button waittext="Back" type="button" (click)="goToHome()"> </app-button>
+    <app-button waittext="Log out" type="button" (click)="logout()"></app-button>
+  </form>
+
 </ion-content>

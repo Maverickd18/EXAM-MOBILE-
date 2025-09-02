@@ -20,5 +20,8 @@ export class StorageProvider {
     localStorage.setItem(key, value);
     
   }
+  remove(key: string) {
+    localStorage.removeItem(key);
+  }
 
 }

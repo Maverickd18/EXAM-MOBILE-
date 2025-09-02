@@ -21,13 +21,16 @@ registeruser(user: Iuser) {
   if (!user) {
     return false;
   }
-  
+  console.log(this.Encriptar.desencriptar(user.password));
   if (user.email === email && this.Encriptar.desencriptar(user.password) === password) {
     this.storageProvider.set('user', JSON.stringify(user));
     return true;
   } 
   return false;
 }
+async logout(): Promise<void> {
+    await this.storageProvider.remove('user');
+  }
 updateUser(updatedUser: Iuser) {
   const users: Iuser[] = this.storageProvider.get<Iuser[]>('users') || [];
   const index = users.findIndex(u => u.id === updatedUser.id);
